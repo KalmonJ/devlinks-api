@@ -1,7 +1,7 @@
-import { AuthenticateUser } from "../core/useCases/AuthenticateUser";
+import { AuthenticateUser } from "../core/use-cases/AuthenticateUser";
 import { UserInMemoryRepository } from "../infra/repositories/UserInMemoryRepository";
 import { HashAdapter } from "../infra/adapters/HashAdapter";
-import { CreateNewUser } from "../core/useCases/CreateNewUser";
+import { CreateNewUser } from "../core/use-cases/CreateNewUser";
 import { IdentifierAdapter } from "../infra/adapters/IdentifierAdapter";
 import { JwtAdapter } from "../infra/adapters/JwtAdapter";
 

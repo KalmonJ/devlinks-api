@@ -1,4 +1,4 @@
-import { CreateNewUser } from "../core/useCases/CreateNewUser";
+import { CreateNewUser } from "../core/use-cases/CreateNewUser";
 import { UserInMemoryRepository } from "../infra/repositories/UserInMemoryRepository";
 import { HashAdapter } from "../infra/adapters/HashAdapter";
 import { IdentifierAdapter } from "../infra/adapters/IdentifierAdapter";
