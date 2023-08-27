@@ -20,7 +20,7 @@ export class User {
   }
 
   private validateEmail(email: string) {
-    const emailRgx = /\w+@[a-z]+\.[a-z]{2,3}/g;
+    const emailRgx = /\w+@[a-z]+\.[a-z]{2,3}/gi;
     const matchEmail = emailRgx.test(email);
     if (!matchEmail) throw new InvalidEmail();
   }
