@@ -3,10 +3,17 @@ import { UserProps } from "../../core/entities/User";
 import UserRepository from "../../core/repositories/UserRepository";
 
 export class UserInMemoryRepository implements UserRepository {
-  users: UserProps[] =  []
+  users: UserProps[] = [];
+  async findByEmail(email: string): Promise<UserProps | null> {
+    const user = this.users.find((user) => user.email === email);
+    if (!user) {
+      return null;
+    }
 
-  async create(input: CreateNewUserDto): Promise<void> {
-    this.users.push(input)
+    return user;
   }
 
+  async create(input: CreateNewUserDto): Promise<void> {
+    this.users.push(input);
+  }
 }
