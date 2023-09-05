@@ -2,6 +2,7 @@ import { CreateNewUser } from "../core/use-cases/CreateNewUser";
 import { UserInMemoryRepository } from "../infra/repositories/UserInMemoryRepository";
 import { HashAdapter } from "../infra/adapters/HashAdapter";
 import { IdentifierAdapter } from "../infra/adapters/IdentifierAdapter";
+import { InvalidPassword } from "../core/exceptions/InvalidPassword";
 
 describe("CreateNewUser use case test", () => {
   test("Must create a new user", async () => {
@@ -22,7 +23,7 @@ describe("CreateNewUser use case test", () => {
     expect(spy).toBeCalledTimes(1);
     expect(repository.users).toHaveLength(1);
   });
-  test("Shouldn't create a user if I pass invalid data", () => {
+  test("Shouldn't create a user if I pass invalid data", async () => {
     const repository = new UserInMemoryRepository();
     const identifierAdapter = new IdentifierAdapter();
     const createUserPayload = {
@@ -35,9 +36,9 @@ describe("CreateNewUser use case test", () => {
       hashAdapter,
       identifierAdapter
     );
-    expect(createNewUser.execute(createUserPayload)).rejects.toThrowError(
-      "Invalid Email"
-    );
+
+    const result = await createNewUser.execute(createUserPayload);
+    expect(result.isLeft()).toBeTruthy();
     expect(repository.users).toHaveLength(0);
   });
 });

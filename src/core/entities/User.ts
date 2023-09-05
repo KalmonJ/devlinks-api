@@ -1,6 +1,8 @@
 import { Either, Left, Right } from "../../utils/Either";
 import { InvalidEmail } from "../exceptions/InvalidEmail";
 import { InvalidPassword } from "../exceptions/InvalidPassword";
+import { Email } from "./Email";
+import { Password } from "./Password";
 
 export interface UserProps {
   id: string;
@@ -18,46 +20,34 @@ export class User {
     this.props = props;
   }
 
-  private static validateEmail(email: string) {
-    const emailRgx = /\w+@[a-z]+\.[a-z]{2,3}/gi;
-    const matchEmail = emailRgx.test(email);
-    if (!matchEmail) return Left.create(new InvalidEmail());
-    return Right.create(email);
-  }
-
-  private static validatePassword(password: string) {
-    if (password.length < 8) {
-      return Left.create(new InvalidPassword("Password too short"));
+  update(
+    input: Partial<UserProps>
+  ): Either<InvalidEmail | InvalidPassword, User> {
+    if (input.email) {
+      const validatedEmail = Email.validate(input.email);
+      if (validatedEmail.isLeft()) return Left.create(validatedEmail.error);
     }
-    return Right.create(password);
+
+    if (input.password) {
+      const validatedPassword = Password.validate(input.password);
+      if (validatedPassword.isLeft())
+        return Left.create(validatedPassword.error);
+    }
+
+    this.props = {
+      ...this.props,
+      ...input,
+    };
+
+    return Right.create(new User(this.props));
   }
-
-  // update(input: Partial<UserProps>) {
-  //   Object.entries(input).forEach(([key, value]) => {
-  //     if (key === "email") {
-  //       this.validateEmail(value);
-  //     } else if (key === "password") {
-  //       this.validatePassword(value);
-  //     }
-  //     this.props[key as keyof UserProps] = value;
-  //   });
-  // }
-
   static create(
     props: UserProps
   ): Either<InvalidEmail | InvalidPassword, User> {
-    const email: Either<InvalidEmail, string> = this.validateEmail(props.email);
-    const password: Either<InvalidPassword, string> = this.validatePassword(
-      props.password
-    );
-
-    console.log("aquiii");
+    const email = Email.validate(props.email);
 
     if (email.isLeft()) {
       return Left.create(email.error);
-    }
-    if (password.isLeft()) {
-      return Left.create(password.error);
     }
     return Right.create(new User(props));
   }
