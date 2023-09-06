@@ -11,7 +11,7 @@ export class UserInMemoryRepository implements UserRepository {
     return user;
   }
   async update(input: UpdateUserDto): Promise<void> {
-    const index = this.users.findIndex((user) => user._id === input.id);
+    const index = this.users.findIndex((user) => user._id === input._id);
     const user = { ...this.users[index], ...input };
     this.users[index] = user;
   }

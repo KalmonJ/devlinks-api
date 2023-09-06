@@ -20,7 +20,7 @@ describe("CreateLink use case test", () => {
     expect(linkRepository.links.length).toBe(1);
   });
 
-  test("An error should appear if an invalid link was passed", () => {
+  test("An error should appear if an invalid link was passed", async () => {
     const input = {
       links: [
         {
@@ -32,6 +32,7 @@ describe("CreateLink use case test", () => {
 
     const linkRepository = new LinkInMemoryRepository();
     const createLink = new CreateLink(linkRepository);
-    expect(createLink.execute(input)).rejects.toThrowError("Invalid link");
+    const response = await createLink.execute(input);
+    expect(response.isLeft()).toBeTruthy();
   });
 });

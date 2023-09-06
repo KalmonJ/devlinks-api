@@ -11,13 +11,13 @@ const jwtAdapter = new JwtAdapter();
 
 export class AuthController {
   static async login(req: Request, res: Response) {
-    const requestBody = req.body;
+    const body = req.body;
     const authenticateUser = new AuthenticateUser(
       userRepository,
       hashAdapter,
       jwtAdapter
     );
-    const response = await authenticateUser.execute(requestBody);
+    const response = await authenticateUser.execute(body);
     if (response.isLeft()) {
       if (response.error instanceof UserNotFound)
         return res.status(404).send(response.error.message);

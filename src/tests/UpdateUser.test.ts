@@ -9,7 +9,7 @@ import { UserInMemoryRepository } from "../infra/repositories/UserInMemoryReposi
 describe("UpdateUser use case test", () => {
   test("Should update a user", async () => {
     const input: UpdateUserDto = {
-      id: "shwjhduhw",
+      _id: "shwjhduhw",
       email: "updatedemail@email.com",
       firstName: "Jhon",
     };

@@ -8,7 +8,7 @@ export class UpdateUser {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(input: UpdateUserDto): Promise<Either<UserNotFound, string>> {
-    const dbUser = await this.userRepository.findById(input.id);
+    const dbUser = await this.userRepository.findById(input._id);
 
     if (!dbUser) return Left.create(new UserNotFound());
     const user = User.create(dbUser);

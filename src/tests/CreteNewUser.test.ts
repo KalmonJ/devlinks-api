@@ -2,7 +2,6 @@ import { CreateNewUser } from "../core/use-cases/CreateNewUser";
 import { UserInMemoryRepository } from "../infra/repositories/UserInMemoryRepository";
 import { HashAdapter } from "../infra/adapters/HashAdapter";
 import { IdentifierAdapter } from "../infra/adapters/IdentifierAdapter";
-import { InvalidPassword } from "../core/exceptions/InvalidPassword";
 
 describe("CreateNewUser use case test", () => {
   test("Must create a new user", async () => {
