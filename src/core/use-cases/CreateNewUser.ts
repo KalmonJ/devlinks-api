@@ -26,7 +26,7 @@ export class CreateNewUser {
 
     const user = User.create({
       ...input,
-      id: this.identifierAdapter.generate(),
+      _id: this.identifierAdapter.generate(),
       password: password.value.password,
     });
 

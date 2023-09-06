@@ -31,7 +31,11 @@ describe("AuthenticateUser use case test", () => {
       jwtAdapter
     );
     const response = await authenticateUser.execute(input);
-    expect(response.accessToken).toBeDefined();
+    expect(response.isRight()).toBeTruthy();
+    if (response.isRight()) {
+      expect(response.value.session).toBeDefined();
+      expect(response.value.session.accessToken.length > 0).toBeTruthy();
+    }
     expect(repositorySpy).toBeCalledWith(input.email);
     expect(hashAdapterSpy).toBeCalled();
   });

@@ -1,3 +1,4 @@
+import { Either, Left, Right } from "../../utils/Either";
 import { Hash } from "../adapters/Hash";
 import { Jwt } from "../adapters/Jwt";
 import {
@@ -17,16 +18,26 @@ export class AuthenticateUser {
 
   async execute(
     input: AuthenticateUserDto
-  ): Promise<AuthenticateUserOutputDto> {
+  ): Promise<
+    Either<UserNotFound | InvalidCredentials, AuthenticateUserOutputDto>
+  > {
     const user = await this.userRepository.findByEmail(input.email);
-    if (!user) throw new UserNotFound();
+    if (!user) return Left.create(new UserNotFound());
+    const match = await this.hashAdapter.compare(input.password, user.password);
+    if (!match) return Left.create(new InvalidCredentials());
+    const token = this.jwtAdapter.sign(user._id);
 
-    const match = this.hashAdapter.compare(input.password, user.password);
-    if (!match) throw new InvalidCredentials();
-
-    const token = this.jwtAdapter.sign(user.id);
-    return {
-      accessToken: token,
-    };
+    return Right.create({
+      session: {
+        accessToken: token,
+        user: {
+          _id: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          image: user.image,
+          lastName: user.lastName,
+        },
+      },
+    });
   }
 }

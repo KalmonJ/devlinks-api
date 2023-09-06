@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { CreateNewUser } from "../../core/use-cases/CreateNewUser";
 import { HashAdapter } from "../adapters/HashAdapter";
-import { UserInMemoryRepository } from "../repositories/UserInMemoryRepository";
 import { IdentifierAdapter } from "../adapters/IdentifierAdapter";
+import { UserDatabaseRepository } from "../repositories/UserDatabaseRepository";
 
 const hashAdapter = new HashAdapter();
-const userRepository = new UserInMemoryRepository();
+const userRepository = new UserDatabaseRepository();
 const identifier = new IdentifierAdapter();
 
 export class UserController {
@@ -20,6 +20,6 @@ export class UserController {
     if (response.isLeft()) {
       return res.status(400).send(response.error.message);
     }
-    return res.status(201).send(response.value.id);
+    return res.status(201).send(response.value._id);
   }
 }
