@@ -5,7 +5,7 @@ import { Email } from "./Email";
 import { Password } from "./Password";
 
 export interface UserProps {
-  _id: string;
+  _id?: string;
   email: string;
   firstName?: string;
   lastName?: string;

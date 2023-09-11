@@ -21,7 +21,7 @@ export class UserController {
     if (response.isLeft()) {
       return res.status(400).send(response.error.message);
     }
-    return res.status(201).send(response.value._id);
+    return res.status(201).send(response.value);
   }
   static async updateUser(req: Request, res: Response) {
     const body = req.body;

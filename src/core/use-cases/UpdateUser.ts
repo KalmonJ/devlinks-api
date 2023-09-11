@@ -1,6 +1,6 @@
 import { Either, Left, Right } from "../../utils/Either";
 import { UpdateUserDto } from "../dtos/UpdateUserDto";
-import { User } from "../entities/User";
+import { User, UserProps } from "../entities/User";
 import { UserNotFound } from "../exceptions/UserNotFound";
 import UserRepository from "../repositories/UserRepository";
 
@@ -15,7 +15,7 @@ export class UpdateUser {
     if (user.isLeft()) {
       return Left.create(user.error);
     }
-    await this.userRepository.update(user.value.props);
+    await this.userRepository.update(user.value.props as Required<UserProps>);
     return Right.create("User successfully updated");
   }
 }

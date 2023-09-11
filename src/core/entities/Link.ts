@@ -2,6 +2,7 @@ import { Either, Left, Right } from "../../utils/Either";
 import { InvalidLink } from "../exceptions/InvalidLink";
 
 export interface LinkProps {
+  _id?: string;
   platform: string;
   link: string;
 }

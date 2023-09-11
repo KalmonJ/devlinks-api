@@ -3,6 +3,7 @@ import { userRoute } from "./infra/http/routes/UserRoutes";
 import { authRoute } from "./infra/http/routes/AuthRoutes";
 import { dbConnection } from "./infra/db/mongodb/connection";
 import { config } from "dotenv";
+import { LinkRoute } from "./infra/http/routes/LinkRoutes";
 config();
 
 dbConnection;
@@ -10,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT ?? 3333;
 
 app.use(express.json());
-app.use(userRoute, authRoute);
+app.use(userRoute, authRoute, LinkRoute);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
