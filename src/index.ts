@@ -13,15 +13,7 @@ const app = express();
 const PORT = process.env.PORT ?? 3333;
 
 app.use(express.json());
-app.use(
-  cors({
-    allowedHeaders:
-      "Content-Type, Accept, Access-Control-Allow-Headers, Authorization, credentials",
-    origin: "*",
-    methods: "GET, POST, DELETE, PUT",
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(userRoute, authRoute, LinkRoute);
 
 app.listen(PORT, () => {
