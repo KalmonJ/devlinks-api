@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(
   cors({
     allowedHeaders:
-      "Content-Type, Accept, Access-Control-Allow-Headers, Authorization",
+      "Content-Type, Accept, Access-Control-Allow-Headers, Authorization, credentials",
     origin: "*",
     methods: "GET, POST, DELETE, PUT",
     credentials: true,
