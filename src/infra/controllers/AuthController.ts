@@ -23,6 +23,7 @@ export class AuthController {
         return res.status(404).send(response.error.message);
       return res.status(400).send(response.error.message);
     }
+    res.status(200).cookie("session", response.value);
     return res.status(200).send(response.value);
   }
 }
