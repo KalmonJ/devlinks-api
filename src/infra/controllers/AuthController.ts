@@ -25,7 +25,7 @@ export class AuthController {
     }
     res
       .writeHead(200, {
-        "Set-Cookie": `session=${response.value}; httpOnly`,
+        "Set-Cookie": `session=${JSON.stringify(response.value)}; httpOnly`,
         "Acess-Control-Allow=Credentials": "true",
       })
       .send();
