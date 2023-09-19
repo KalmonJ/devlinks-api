@@ -25,7 +25,7 @@ export class AuthenticateUser {
     if (!user) return Left.create(new UserNotFound());
     const match = await this.hashAdapter.compare(input.password, user.password);
     if (!match) return Left.create(new InvalidCredentials());
-    const token = this.jwtAdapter.sign(user._id);
+    const token = this.jwtAdapter.sign({ userId: user._id });
 
     return Right.create({
       session: {
