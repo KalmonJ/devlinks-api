@@ -31,7 +31,7 @@ export class AuthController {
         path: "/",
         httpOnly: false,
         sameSite: "none",
-        secure: true,
+        secure: false,
       })
       .send({});
   }
