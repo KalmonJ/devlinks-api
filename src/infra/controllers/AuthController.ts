@@ -28,7 +28,6 @@ export class AuthController {
       .status(200)
       .cookie("session", response.value, {
         httpOnly: true,
-        domain: "http://localhost:3000",
         sameSite: "none",
       })
       .send({});
