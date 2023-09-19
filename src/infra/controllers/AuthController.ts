@@ -24,15 +24,6 @@ export class AuthController {
       return res.status(400).send(response.error.message);
     }
 
-    return res
-      .status(200)
-      .cookie("session", response.value, {
-        domain: "http://localhost:3000",
-        path: "/",
-        httpOnly: false,
-        sameSite: "none",
-        secure: false,
-      })
-      .send({});
+    return res.status(200).send(response.value);
   }
 }
