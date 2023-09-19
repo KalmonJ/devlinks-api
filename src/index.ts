@@ -15,6 +15,7 @@ const PORT = process.env.PORT ?? 3333;
 app.use(express.json());
 app.use(
   cors({
+    origin: "http://localhost:3000",
     methods: "GET, POST, DELETE, PUT",
   })
 );
