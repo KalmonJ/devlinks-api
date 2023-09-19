@@ -24,8 +24,11 @@ export class AuthController {
       return res.status(400).send(response.error.message);
     }
 
-    return res.status(200).cookie("session", response.value, {
-      httpOnly: true,
-    });
+    return res
+      .status(200)
+      .cookie("session", response.value, {
+        httpOnly: true,
+      })
+      .send({});
   }
 }
