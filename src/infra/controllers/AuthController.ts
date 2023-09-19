@@ -23,11 +23,11 @@ export class AuthController {
         return res.status(404).send(response.error.message);
       return res.status(400).send(response.error.message);
     }
-    res
+
+    return res
       .writeHead(200, {
         "Set-Cookie": `session=${response.value}; httpOnly`,
       })
       .send();
-    return res.status(200).send(response.value);
   }
 }
