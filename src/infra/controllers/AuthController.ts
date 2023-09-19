@@ -25,9 +25,10 @@ export class AuthController {
     }
 
     return res
-      .writeHead(200, {
-        "Set-Cookie": `session=${response.value}; httpOnly`,
+      .status(200)
+      .cookie("session", response.value, {
+        httpOnly: true,
       })
-      .send("success");
+      .send();
   }
 }
