@@ -29,6 +29,6 @@ export class AuthController {
       .cookie("session", response.value, {
         httpOnly: true,
       })
-      .send();
+      .send("success");
   }
 }
