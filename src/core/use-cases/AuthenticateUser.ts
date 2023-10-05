@@ -31,7 +31,7 @@ export class AuthenticateUser {
       session: {
         accessToken: token,
         user: {
-          id: user._id,
+          _id: user._id,
           email: user.email,
           firstName: user.firstName,
           image: user.image,
