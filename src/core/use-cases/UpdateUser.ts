@@ -26,16 +26,16 @@ export class UpdateUser {
       return Left.create(updatedUser.error);
     }
 
-    await this.userRepository.update(
+    const updatedDbUser = await this.userRepository.update(
       updatedUser.value.props as Required<UserProps>
     );
 
     return Right.create({
-      _id: user.value.props._id as string,
-      email: user.value.props.email,
-      firstName: user.value.props.firstName,
-      image: user.value.props.image,
-      lastName: user.value.props.lastName,
+      _id: updatedDbUser?._id as string,
+      email: updatedDbUser?.email as string,
+      firstName: updatedDbUser?.firstName,
+      image: updatedDbUser?.image,
+      lastName: updatedDbUser?.lastName,
     });
   }
 }

@@ -38,65 +38,15 @@ export class UserController {
   }
 
   static async updateUser(req: Request, res: Response, next: NextFunction) {
-    const form = formidable({
-      uploadDir: "src/infra/temp/images",
-      filename(name, _, part, __) {
-        return `${name}.${part.mimetype?.split("/")[1]}`;
-      },
-    });
+    const updateUser = new UpdateUser(userRepository);
+    const upload = new ImageUploader();
+    const url = await upload.config().upload(req.file?.path ?? "");
+    const response = await updateUser.execute({ ...req.body, image: url });
 
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        next(err);
-        console.log(err);
-        return;
-      }
+    if (response.isLeft()) {
+      return res.status(404).send(response.error.message);
+    }
 
-      if (files.image) {
-        const image = files.image[0];
-
-        try {
-          const uploader = new ImageUploader();
-          const imageUrl = await uploader.config().upload(image.filepath);
-
-          const payload: UpdateUserDto = {
-            _id: "",
-            email: undefined,
-            firstName: undefined,
-            image: undefined,
-            lastName: undefined,
-          };
-
-          for (const key in fields) {
-            const [value]: string[] = fields[key] as string[];
-            payload[key as keyof UpdateUserDto] = value;
-            if (key === "image" && imageUrl) {
-              payload[key] = imageUrl;
-              console.log(imageUrl, "urlll");
-            }
-          }
-
-          const updateUser = new UpdateUser(userRepository);
-          const response = await updateUser.execute(payload);
-
-          if (response.isLeft()) {
-            return res.status(404).send(response.error.message);
-          }
-
-          return res.status(200).send(response.value);
-        } catch (error) {
-          return res.status(400).send("Unknown error");
-        }
-      } else {
-        const updateUser = new UpdateUser(userRepository);
-        const response = await updateUser.execute(req.body);
-
-        if (response.isLeft()) {
-          return res.status(404).send(response.error.message);
-        }
-
-        return res.status(200).send(response.value);
-      }
-    });
+    return res.status(200).send(response.value);
   }
 }

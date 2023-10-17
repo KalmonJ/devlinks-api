@@ -5,5 +5,5 @@ export default interface UserRepository {
   create(input: UserProps): Promise<UserProps>;
   findByEmail(email: string): Promise<UserProps | null>;
   findById(id: string): Promise<UserProps | null>;
-  update(input: UpdateUserDto): Promise<void>;
+  update(input: UpdateUserDto): Promise<UserProps | null>;
 }
