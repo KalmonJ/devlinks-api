@@ -7,7 +7,7 @@ const schema = new Schema({
   image: { type: String },
   firstName: { type: String },
   lastName: { type: String },
-  links: { type: mongoose.Types.ObjectId, ref: "Links" },
+  links: [{ type: mongoose.Types.ObjectId, ref: "Links" }],
 });
 
 export default model<UserProps>("Users", schema);
