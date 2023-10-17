@@ -14,7 +14,7 @@ export class UserDatabaseRepository implements UserRepository {
     return response;
   }
   async findById(id: string): Promise<UserProps | null> {
-    return await UserSchema.findById(id);
+    return await UserSchema.findById(id).populate("links");
   }
   async update(input: UpdateUserDto): Promise<UserProps | null> {
     const response = await UserSchema.findOneAndUpdate(

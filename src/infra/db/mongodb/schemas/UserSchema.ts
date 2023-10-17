@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import { UserProps } from "../../../../core/entities/User";
 
 const schema = new Schema({
@@ -7,6 +7,7 @@ const schema = new Schema({
   image: { type: String },
   firstName: { type: String },
   lastName: { type: String },
+  links: { type: mongoose.Types.ObjectId, ref: "Links" },
 });
 
 export default model<UserProps>("Users", schema);
