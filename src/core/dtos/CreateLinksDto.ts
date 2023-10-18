@@ -2,5 +2,5 @@ import { LinkProps } from "../entities/Link";
 
 export interface CreateLinksDto {
   links: LinkProps[];
-  userId: string;
+  user: string;
 }

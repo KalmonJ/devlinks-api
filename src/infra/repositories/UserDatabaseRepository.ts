@@ -7,11 +7,11 @@ export class UserDatabaseRepository implements UserRepository {
   async create(input: UserProps): Promise<UserProps> {
     const user = new UserSchema(input);
     const savedUser = await user.save();
-    return savedUser;
+    return savedUser as unknown as UserProps;
   }
   async findByEmail(email: string): Promise<UserProps | null> {
     const response = await UserSchema.findOne({ email });
-    return response;
+    return response as unknown as UserProps;
   }
   async findById(id: string): Promise<UserProps | null> {
     return await UserSchema.findById(id).populate("links");
@@ -33,6 +33,6 @@ export class UserDatabaseRepository implements UserRepository {
     );
     const updatedUser = await response?.save();
 
-    return updatedUser as UserProps;
+    return updatedUser as unknown as UserProps;
   }
 }

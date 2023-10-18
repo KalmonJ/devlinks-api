@@ -10,4 +10,4 @@ const schema = new Schema({
   links: [{ type: mongoose.Types.ObjectId, ref: "Links" }],
 });
 
-export default model<UserProps>("Users", schema);
+export default model("Users", schema);

@@ -26,7 +26,7 @@ export class CreateLink {
       }
     });
 
-    await this.linkRepository.create(links, input.userId);
+    await this.linkRepository.create(links, input.user);
 
     if (error!) {
       return Left.create(error);
