@@ -17,12 +17,21 @@ export class LinkDatabaseRepository implements LinkRepository {
     const links = await LinkSchema.findOne({
       user: user?.id,
     });
+
     if (!links) {
-      await LinkSchema.create({ links: input.map((link) => link.props), user });
+      const createdLinks = await LinkSchema.create({
+        links: input.map((link) => link.props),
+        user,
+      });
+      await UserSchema.findByIdAndUpdate(userId, {
+        $set: {
+          links: createdLinks,
+        },
+      });
     }
 
     if (links) {
-      await LinkSchema.findOneAndUpdate(
+      const updatedLinks = await LinkSchema.findOneAndUpdate(
         {
           user: user?.id,
         },
@@ -32,6 +41,12 @@ export class LinkDatabaseRepository implements LinkRepository {
           },
         }
       );
+
+      await UserSchema.findByIdAndUpdate(userId, {
+        $set: {
+          links: updatedLinks,
+        },
+      });
     }
   }
 }
